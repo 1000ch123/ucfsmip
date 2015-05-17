@@ -142,3 +142,7 @@ Boolean:callされたらRubyプリミティブのBooleanになればok
 
 Variable:変換先環境とともにcallされ，変換先環境における対応値をかえす
 
+二項演算子:
+各項をto_rubyでSIMPLE世界表現からRuby世界表現に変換
+その結果をそれぞれcallしRubyオブジェクト化
+２つのRubyオブジェクトを演算

@@ -35,3 +35,29 @@ puts proc_str
 proc = eval(proc_str)  # procオブジェクト
 val = proc.call({:x => 8}) # 環境を与えcall
 puts val
+
+
+class Add < Struct.new(:left, :right)
+    def to_ruby
+        "-> e { (#{left.to_ruby}).call(e) + (#{right.to_ruby}).call(e) }"
+    end
+end
+
+class Multiply < Struct.new(:left, :right)
+    def to_ruby
+        "-> e { (#{left.to_ruby}).call(e) * (#{right.to_ruby}).call(e) }"
+    end
+end
+
+class LessThan < Struct.new(:left, :right)
+    def to_ruby
+        "-> e { (#{left.to_ruby}).call(e) > (#{right.to_ruby}).call(e) }"
+    end
+end
+
+exp = Add.new(Number.new(3), Number.new(5))
+proc_str = exp.to_ruby
+puts proc_str
+proc = eval(proc_str)
+val = proc.call({})
+puts val
