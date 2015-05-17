@@ -219,3 +219,31 @@ DS
 
 その他
 - 公理的意味論:Axiomatic Semantics
+
+## 2.6 パーサ実装
+
+いちいち`Number.new(4)`とかやってられないよね
+`x = x + 1` を解釈して `Assign.new(:x, Add.new(Variable.new(:x), Number.new(1)))`に変換してほしいよね
+SIMPLE用パーサがあるといいね
+
+さっくりパーサつくるライブラリTreetop
+http://treetop.rubyforge.org/
+https://github.com/nathansobo/treetop
+vim向けcolorscheme
+https://github.com/nanki/treetop.vim
+
+`sudo gem install treetop`
+
+パーサを自動生成するためのDSL:Parsing Expression Grammer
+正規表現的な書き方でルールの一覧を作る
+
+TreetopはPEGで記述されたルールからパーサオブジェクトを返すっぽい
+```
+require 'treetop'
+Treetop.load 'simple'
+
+parser = SimpleParser.new
+tree = parser.parse
+```
+
+より詳しいパーサ実装は4.3にて.
