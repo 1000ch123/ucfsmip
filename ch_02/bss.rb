@@ -1,6 +1,4 @@
 # Big Step Semantics
-
-
 class Number < Struct.new(:value)
     def to_s
         value.to_s
@@ -61,11 +59,6 @@ class LessThan < Struct.new(:left, :right)
     end
 end
 
-# 実行してみよう
-puts Number.new(23).evaluate({})
-puts Variable.new(:x).evaluate({:x => Number.new(10)})
-puts LessThan.new(Number.new(10), Number.new(20)).evaluate({})
-
 # 文
 class DoNothing
     def evaluate(environment)
@@ -107,17 +100,4 @@ class While < Struct.new(:condition, :body)
     end
 end
 
-statement =
-    Sequence.new(
-        Assign.new(:x,Number.new(5)),
-        Assign.new(:y,Number.new(8))
-    )
-puts statement.evaluate({})
-
-statement =
-    While.new(
-        LessThan.new(Variable.new(:x),Number.new(5)),
-        Assign.new(:x, Add.new(Variable.new(:x),Number.new(1)))
-    )
-puts statement.evaluate({:x => Number.new(0)})
 
