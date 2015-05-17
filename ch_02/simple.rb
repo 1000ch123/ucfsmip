@@ -121,6 +121,8 @@ class DoNothing
 end
 
 ## 代入文
+## 変数名 = 式
+## 文は簡約文と環境のarrを返す
 class Assign < Struct.new(:name, :expression)
     def to_s
         "#{name} = #{expression}"
@@ -142,6 +144,36 @@ class Assign < Struct.new(:name, :expression)
         end
     end
 end
+
+## IF文
+## if 条件式 then 帰結文 else 代替文
+class If < Struct.new(:condition, :consequence, :alternative)
+    def to_s
+        "if #{condition} then #{consequence} else #{alternative}"
+    end
+
+    def inspect
+        "<<#{self}>>"
+    end
+
+    def reducible?
+        true
+    end
+
+    def reduce(environment)
+        if condition.reducible?
+            [If.new(condition.reduce(environment), consequence, alternative), environment]
+        else
+            case condition
+            when Boolean.new(true)
+                [consequence, environment]
+            when Boolean.new(false)
+                [alternative, environment]
+            end
+        end
+    end
+end
+
 
 # 仮想機械
 class Machine < Struct.new(:expression,:environment)
@@ -225,6 +257,7 @@ puts "\n変数"
 Machine.new(exp,env).run
 
 # 文を扱う
+puts "\n代入文"
 state = Assign.new(
     :x, Add.new(Variable.new(:x), Number.new(1))
 )
@@ -233,5 +266,32 @@ env = {
     x: Number.new(2)
 }
 
-puts "\n代入文"
 StatementMachine.new(state, env).run
+
+puts "\nif-else文"
+state = If.new(
+    Variable.new(:x),
+    Assign.new(:y, Number.new(1)),
+    Assign.new(:y, Number.new(2))
+)
+
+env = {
+    x: Boolean.new(true)
+}
+
+StatementMachine.new(state, env).run
+
+puts "\nif文"
+state = If.new(
+    Variable.new(:x),
+    Assign.new(:y, Number.new(1)),
+    DoNothing.new
+)
+
+env = {
+    x: Boolean.new(false)
+}
+
+StatementMachine.new(state, env).run
+
+
