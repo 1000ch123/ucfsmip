@@ -51,7 +51,7 @@ end
 
 class LessThan < Struct.new(:left, :right)
     def to_ruby
-        "-> e { (#{left.to_ruby}).call(e) > (#{right.to_ruby}).call(e) }"
+        "-> e { (#{left.to_ruby}).call(e) < (#{right.to_ruby}).call(e) }"
     end
 end
 
@@ -80,3 +80,45 @@ class DoNothing
         "-> e { e }"
     end
 end
+
+
+class If < Struct.new(:condition, :consequence, :alternative)
+    def to_ruby
+        "-> e { if (#{condition.to_ruby}).call(e)" +
+            " then (#{consequence.to_ruby}).call(e)" +
+            " else (#{alternative.to_ruby}).call(e)" +
+            " end }"
+    end
+end
+
+class Sequence < Struct.new(:first, :second)
+    def to_ruby
+        "-> e { (#{second.to_ruby}).call((#{first.to_ruby}).call(e)) }"
+    end
+end
+
+class While < Struct.new(:condition, :body)
+    def to_ruby
+        "-> e {" +
+            " while (#{condition.to_ruby}).call(e); e = (#{body.to_ruby}).call(e); end;" + " e" +
+            " }"
+    end
+end
+
+# こんな感じ
+#while cond(e)
+    #e = body(e)
+#end
+#return e
+
+statement = While.new(
+    LessThan.new(Variable.new(:x),Number.new(5)),
+    Assign.new(:x, Add.new(Variable.new(:x), Number.new(1)))
+)
+proc_str = statement.to_ruby
+puts proc_str
+proc = eval(proc_str)
+val = proc.call({:x => 1})
+puts val
+
+
