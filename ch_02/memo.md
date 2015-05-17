@@ -76,3 +76,17 @@ Variable : 対応する値として評価される
 
 Add/Mul/LT : 部分式を再帰評価し，演算
 （どうやるか，ではなくどうあるべきか．関数型っぽいね
+
+#### 2.3.2.2 文
+BSSは文記述につよい
+
+SSS: state -> state',env
+BSS: state -> env
+
+中間文state'が存在しない!
+
+assign:代入された環境を返す
+donothing:与えられた環境を返す
+if:conditionにより，cons/altを評価し，結果の環境を返す
+sequence:fst評価した結果をもとにsnd評価し，結果の環境を返す
+while:condの評価結果がtrueな限りbodyを評価しenv更新し続ける.false時のenvを返す
