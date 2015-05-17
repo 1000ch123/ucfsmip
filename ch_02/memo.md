@@ -35,4 +35,31 @@ ex2.OCaml
 
 スモールステップ意味論を用い，式をラムダ計算で記述する手法 -> 6.2節にて
 
+### 2.3.2 ビッグステップ意味論(Big Step Semantics)
+
+以下
+SSS : Small Step Semantics
+BSS : Big Step Semantics
+
+SSS:反復的(iterative)
+iterationする抽象機械が必要
+入力から新しい出力をひたすら繰り返している
+「動作のルール」ではなく「簡約のルール」を定義しているのがSSS
+
+もっと直接的に「動作のルール」を定義できないか?
+-> BSS
+BSS: 再帰的(recursive)
+
+SSS
+- 操作順が明確「この順でやっといて」
+- 途中結果が取得しやすい
+BSS
+- 実行順序は曖昧「これやっといて」
+- 結果があるのみ
+
+BSSを実装してみよう
+VMはいらない
+AST(Abstract Syntax Tree)を走査するだけ
+式/文にevaluateを実装するのみでok
+まぁやってみましょう
 
