@@ -63,3 +63,16 @@ AST(Abstract Syntax Tree)を走査するだけ
 式/文にevaluateを実装するのみでok
 まぁやってみましょう
 
+#### 2.3.2.1 式
+
+SSSでは式は簡約可能/不可能で分かれていた(reducible?
+BSSではすべての式が評価可能
+
+BSSのゴールはSSSでの動作をモデル化すること
+BigStepかSmallStepかというだけで，やることは同じ
+
+Number/Boolean : 自身と同じものと評価される
+Variable : 対応する値として評価される
+
+Add/Mul/LT : 部分式を再帰評価し，演算
+（どうやるか，ではなくどうあるべきか．関数型っぽいね
