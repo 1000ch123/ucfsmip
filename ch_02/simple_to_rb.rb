@@ -61,3 +61,22 @@ puts proc_str
 proc = eval(proc_str)
 val = proc.call({})
 puts val
+
+class Assign < Struct.new(:name, :expression)
+    def to_ruby
+        "-> e { e.merge({ #{name.inspect} => (#{expression.to_ruby}).call(e) }) }"
+    end
+end
+
+exp = Assign.new(:x, Number.new(4))
+proc_str = exp.to_ruby
+puts proc_str
+proc = eval(proc_str)
+val = proc.call({})
+puts val
+
+class DoNothing
+    def to_ruby
+        "-> e { e }"
+    end
+end
