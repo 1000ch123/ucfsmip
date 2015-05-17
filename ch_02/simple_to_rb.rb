@@ -22,3 +22,16 @@ puts proc.call({})
 
 proc = eval(Boolean.new(true).to_ruby)
 puts proc.call(0) # procはラムダ式.Number/Booleanでは引数なんでもok
+
+class Variable < Struct.new(:name)
+    def to_ruby
+        "-> e { e[#{name.inspect}]}"
+    end
+end
+
+exp = Variable.new(:x) # SIMPLE式
+proc_str = exp.to_ruby # proc文字列
+puts proc_str
+proc = eval(proc_str)  # procオブジェクト
+val = proc.call({:x => 8}) # 環境を与えcall
+puts val

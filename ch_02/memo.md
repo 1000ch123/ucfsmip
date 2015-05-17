@@ -137,4 +137,8 @@ proc:いわゆるラムダ式(cf.1.2.3
 SIMPLE:to_rubyメソッドでRubyにおけるオブジェクトを表すproc文字列を返す
 Ruby:proc文字列をevalしてcallすればオブジェクトが得られる
 
+Number:callされたらRubyプリミティブのNumberになればok
+Boolean:callされたらRubyプリミティブのBooleanになればok
+
+Variable:変換先環境とともにcallされ，変換先環境における対応値をかえす
 
