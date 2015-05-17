@@ -128,3 +128,13 @@ SIMPLE -> Ruby converterを作り，SIMPLEに表示的意味論を与える.
 要するにRubyコードへ変換するってこと？
 やってみればわかるんじゃない
 
+### 2.4.1 式
+SIMPLEにおける値を，Rubyにおけるobjectとして変換するメソッドをつくろう．
+(SIMPLEを表現する言語としての)Rubyにおけるprocを用いればok
+
+proc:いわゆるラムダ式(cf.1.2.3
+
+SIMPLE:to_rubyメソッドでRubyにおけるオブジェクトを表すproc文字列を返す
+Ruby:proc文字列をevalしてcallすればオブジェクトが得られる
+
+
