@@ -12,8 +12,9 @@
       var hljs = remark.highlighter.engine;
     </script>
     <script type="text/javascript">
+      var query = window.location.search.substring(1);
       var slideshow = remark.create({
-          sourceUrl: "slides/myslide.md",
+          sourceUrl: query ? "slides/" + query + ".md" : "README.md",
           highlightStyle: 'monokai',
           highlightLanguage: 'remark'
         }) ;
